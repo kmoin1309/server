@@ -1,5 +1,12 @@
 const Category = require("../models/Category");
+const { Mongoose } = require("mongoose");
+
 // const Tag = require("../models/Category");
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
 
 //create tags and the handler function
 
