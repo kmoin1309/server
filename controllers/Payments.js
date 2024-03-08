@@ -6,6 +6,9 @@ const {
   constEnrollmentEmail,
 } = require("../mail/templates/courseEnrollmentEmail");
 const { mongo, default: mongoose } = require("mongoose");
+const {paymentSuccessEmail} = require("../mail/templates/paymentSuccessEmail");
+const CourseProgress = require("../models/CourseProgress");
+const crypto = require("crypto");
 
 //capture the payment and initiate the Razorpay order
 exports.capturePayment = async (req, res) => {
@@ -89,11 +92,60 @@ exports.verifySignature = async (req, res) => {
 
   const signature = req.headers("x-razorpay-signature");
 
-  const shasum = crypto.createHmac("sha256",webhooksecret);
+  const shasum = crypto.createHmac("sha256", webhooksecret);
   shasum.update(JSON.stringify(req.body));
   const digest = shasum.digest("hex");
 
-  if(signature === digest) {
+  if (signature === digest) {
     console.log("Payment is Authorized");
+
+    const { courseId, userId } = req.body.payload.entity.notes;
+
+    try {
+      // fulfill the action
+      //find the course and rnroll the studnt in it
+      const enrolledCourse = await Course.findOneAndUpdate(
+        { _id: courseId },
+        { $push: { studentsEnrolled: userId } },
+        { new: true }
+      );
+      if (!enrolledCourse) {
+        return res.status(500).json({
+          success: false,
+          message: "Course not found",
+        });
+      }
+      console.log(enrolledCourse);
+      //find the stundet and te course to their enrolled course me
+      const enrolledStudent = await User.findByIdAndDelete(
+        { _id: userId },
+        { $push: { course: courseId } },
+        { new: true }
+      );
+      console.log(enrolledCourse);
+
+      //mail sned for the confirmation
+
+      const emailResponse = await mailSender(
+        enrolledStudent.email,
+        "Congratuions, you are enrolled"
+      );
+      console.log(emailResponse);
+      return res.status(200).json({
+        success: true,
+        message: "Signature verifed and course added",
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({
+        return: false,
+        message: error.message,
+      });
+    }
+  } else {
+    return res.status(400).json({
+      success: false,
+      message: "Invaild Response",
+    });
   }
 };
