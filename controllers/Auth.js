@@ -1,9 +1,10 @@
-const User = requiire("../models/User");
+const User = require("../models/User");
 const OTP = require("../models/OTP");
 const otpGenerator = require("otp-generator");
 const Profile = require("../models/Profile");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 const mailSender = require("../utils/mailSender");
 const { passwordUpdated } = require("../mail/templates/passwordUpdate");
 require("dotenv").config();
@@ -63,7 +64,7 @@ exports.sendOTP = async (req, res) => {
     console.log(error);
     return res.status(500).json({
       success: false,
-      message: error.message,
+      message: "OTP Could not be sent",
     });
   }
 };
@@ -126,7 +127,7 @@ exports.signup = async (req, res) => {
         success: false,
         message: "OTP not found",
       });
-    } else if (otp !== recentOtp.otp) {
+    } else if (otp !== recentOtp[0].otp) {
       return res.status(400).json({
         success: false,
         message: "Otp Invalid",
@@ -152,7 +153,8 @@ exports.signup = async (req, res) => {
       password: hashedPassword,
       accountType,
       additionalDetails: profileDetails._id,
-      image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstname} ${lastName}`,
+      image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
+      // image:"",
     });
     // return res
     return res.status(200).json({
@@ -182,7 +184,7 @@ exports.login = async (req, res) => {
       });
     }
     //check user if exist or not
-    const user = await User.findOne({ email }).populate("additonalDetails");
+    const user = await User.findOne({ email }).populate("additionalDetails");
     if (!user) {
       return res.status(401).json({
         success: false,

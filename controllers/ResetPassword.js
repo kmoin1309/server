@@ -19,7 +19,7 @@ exports.resetPasswordToken = async (req, res) => {
     //generate token
     const token = crypto.randomBytes(20).toString("hex");
     //update user by adding token and expiration time
-    const updatedDetails = await User.findByIdAndUpdate(
+    const updatedDetails = await User.findOneAndUpdate(
       { email: email },
       {
         token: token,
@@ -27,6 +27,7 @@ exports.resetPasswordToken = async (req, res) => {
       },
       { new: true }
     );
+    console.log(updatedDetails);
     // create url
     const url = `http://localhost:3000/update-password/${token}`;
     // send mail containig the url
@@ -42,7 +43,7 @@ exports.resetPasswordToken = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return re.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Something went wrong while resetting the password",
     });
