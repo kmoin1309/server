@@ -9,7 +9,7 @@ function getRandomInt(max) {
 
 //create tags and the handler function
 
-exports.exports.createCategory = async (req, res) => {
+exports.createCategory = async (req, res) => {
   try {
     // fetch data
     const { name, description } = req.body;
