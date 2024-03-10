@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const User = require("../models/User");
+const { reset } = require("nodemon");
 
 // auth
 exports.auth = async (req, res, next) => {
@@ -9,12 +10,12 @@ exports.auth = async (req, res, next) => {
     const token =
       req.cookies.token ||
       req.body.token ||
-      req.header("Authorisation").replace("Bearer ", "");
+      req.header("Authorization").replace("Bearer ", "");
     // if token missing, then return response
     if (!token) {
       return res.status(401).json({
         success: false,
-        message: "Token is Missing",
+        message: `Token is Missing`,
       });
     }
     // verify the token
@@ -22,7 +23,7 @@ exports.auth = async (req, res, next) => {
       const decode = jwt.verify(token, process.env.JWT_SECRET);
       console.log(decode);
       req.user = decode;
-    } catch (err) {
+    } catch (error) {
       // verificaton issue
       return res.status(401).json({
         success: false,
@@ -43,7 +44,7 @@ exports.isStudent = async (req, res, next) => {
   try {
     // const userDetails = await User.
     if (req.user.accountType !== "Student") {
-      return re.status(401).json({
+      return res.status(401).json({
         success: false,
         message: "This is proected Route for Students only",
       });
@@ -52,7 +53,7 @@ exports.isStudent = async (req, res, next) => {
   } catch (error) {
     return res.status(401).json({
       success: false,
-      message: "User role cannot be verified , please try again",
+      message: `User role cannot be verified , please try again`,
     });
   }
 };
@@ -61,17 +62,19 @@ exports.isStudent = async (req, res, next) => {
 exports.isInstructor = async (req, res, next) => {
   try {
     // const userDetails = await User.
-    if (req.user.accountType !== "Instructor") {
-      return re.status(401).json({
+    const userDetails = await User.findOne({ email: req.user.email });
+    console.log(userDetails);
+    console.log(userDetails.accountType);
+    if (userDetails.accountType !== "Instructor") {
+      return res.status(401).json({
         success: false,
         message: "This is proected Route for Instructor only",
       });
     }
-    next();
   } catch (error) {
     return res.status(401).json({
       success: false,
-      message: "User role cannot be verified , please try again",
+      message: `User role cannot be verified , please try again`,
     });
   }
 };
@@ -79,9 +82,9 @@ exports.isInstructor = async (req, res, next) => {
 //isAdmin
 exports.isAdmin = async (req, res, next) => {
   try {
-    // const userDetails = await User.
-    if (req.user.accountType !== "Admin") {
-      return re.status(401).json({
+    const userDetails = await User.findOne({ email: req.user.email });
+    if (userDetails.accountType !== "Admin") {
+      return res.status(401).json({
         success: false,
         message: "This is proected Route for Admin only",
       });
@@ -90,7 +93,7 @@ exports.isAdmin = async (req, res, next) => {
   } catch (error) {
     return res.status(401).json({
       success: false,
-      message: "User role cannot be verified , please try again",
+      message: `User role cannot be verified , please try again`,
     });
   }
 };
