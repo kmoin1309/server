@@ -22,12 +22,12 @@ exports.updateProfile = async (req, res) => {
     //get userid
     const id = req.user.id;
     //validation
-    if (!contactNumber || !about || !gender || !id) {
-      return res.status(400).json({
-        success: false,
-        message: "All fileds are required",
-      });
-    }
+    // if (!contactNumber || !about || !gender || !id) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "All fileds are required",
+    //   });
+    // }
 
     // Find the profile by id
     const userDetails = await User.findById(id);
