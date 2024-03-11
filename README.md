@@ -1,133 +1,166 @@
+[![Express Logo](https://i.cloudup.com/zfY6lL7eFa-3000x3000.png)](http://expressjs.com/)
 
-# StudyNotion - EdTech Platform
-:rocket: [Link to website][https://studynotion-frontend.vercel.app/]
+  Fast, unopinionated, minimalist web framework for [Node.js](http://nodejs.org).
 
+  [![NPM Version][npm-version-image]][npm-url]
+  [![NPM Install Size][npm-install-size-image]][npm-install-size-url]
+  [![NPM Downloads][npm-downloads-image]][npm-downloads-url]
 
-![Main Page](images/mainpage.png)
-StudyNotion is a fully functional EdTech platform that enables users to create, consume, and rate educational content. The platform is built using the MERN stack, which includes ReactJS, NodeJS, MongoDB, and ExpressJS.
+```js
+const express = require('express')
+const app = express()
 
-## Table of Contents
+app.get('/', function (req, res) {
+  res.send('Hello World')
+})
 
-- [Introduction](#introduction)
-- [System Architecture](#system-architecture)
-  - [Front-end](#front-end)
-  - [Back-end](#back-end)
-  - [Database](#database)
-  - [Architecture Diagram](#architecture-diagram)
-- [API Design](#api-design)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-
-
-## Introduction
-
-StudyNotion aims to provide a seamless and interactive learning experience for students, making education more accessible and engaging. Additionally, the platform serves as a platform for instructors to showcase their expertise and connect with learners across the globe.
-
-In the following sections, we will cover the technical details of the platform, including the system architecture, API design, installation, usage instructions, and potential future enhancements.
-
-## System Architecture
-
-The StudyNotion EdTech platform consists of three main components: the front-end, the back-end, and the database. The platform follows a client-server architecture, with the front-end serving as the client and the back-end and database serving as the server.
-
-### Front-end
-
-The front-end of the platform is built using ReactJS, which allows for the creation of dynamic and responsive user interfaces, crucial for providing an engaging learning experience to students. The front-end communicates with the back-end using RESTful API calls.
-
-#### Front End Pages
-
-For Students:
-
-- **Homepage:** A brief introduction to the platform with links to the course list and user details.
-- **Course List:** A list of all the courses available on the platform, along with their descriptions and ratings.
-- **Wishlist:** Displays all the courses that a student has added to their wishlist.
-- **Cart Checkout:** Allows the user to complete course purchases.
-- **Course Content:** Presents the course content for a particular course, including videos and related material.
-- **User Details:** Provides details about the student's account, including their name, email, and other relevant information.
-- **User Edit Details:** Allows students to edit their account details.
-
-For Instructors:
-
-- **Dashboard:** Offers an overview of the instructor's courses, along with ratings and feedback for each course.
-- **Insights:** Provides detailed insights into the instructor's courses, including the number of views, clicks, and other relevant metrics.
-- **Course Management Pages:** Enables instructors to create, update, and delete courses, as well as manage course content and pricing.
-- **View and Edit Profile Details:** Allows instructors to view and edit their account details.
-
-#### Front-end Tools and Libraries
-
-To build the front-end, we use frameworks and libraries such as ReactJS, CSS, and Tailwind for styling, and Redux for state management.
-
-### Back-end
-
-The back-end of the platform is built using NodeJS and ExpressJS, providing APIs for the front-end to consume. These APIs include functionalities such as user authentication, course creation, and course consumption. The back-end also handles the logic for processing and storing the course content and user data.
-
-#### Back-end Features
-
-- **User Authentication and Authorization:** Students and instructors can sign up and log in to the platform using their email addresses and passwords. The platform also supports OTP (One-Time Password) verification and forgot password functionality for added security.
-- **Course Management:** Instructors can create, read, update, and delete courses, as well as manage course content and media. Students can view and rate courses.
-- **Payment Integration:** Students will purchase and enroll in courses by completing the checkout flow, followed by Razorpay integration for payment handling.
-- **Cloud-based Media Management:** StudyNotion uses Cloudinary, a cloud-based media management service, to store and manage all media content, including images, videos, and documents.
-- **Markdown Formatting:** Course content in document format is stored in Markdown format, allowing for easier display and rendering on the front-end.
-
-#### Back-end Frameworks, Libraries, and Tools
-
-The back-end of StudyNotion uses various frameworks, libraries, and tools to ensure its functionality and performance, including:
-
-- **Node.js:** Used as the primary framework for the back-end.
-- **Express.js:** Used as a web application framework, providing a range of features and tools for building web applications.
-- **MongoDB:** Used as the primary database, providing a flexible and scalable data storage solution.
-- **JWT (JSON Web Tokens):** Used for authentication and authorization, providing a secure and reliable way to manage user credentials.
-- **Bcrypt:** Used for password hashing, adding an extra layer of security to user data.
-- **Mongoose:** Used as an Object Data Modeling (ODM) library, providing a way to interact with MongoDB using JavaScript.
-
-#### Data Models and Database Schema
-
-The back-end of StudyNotion uses several data models and database schemas to manage data, including:
-
-- **Student Schema:** Includes fields such as name, email, password, and course details for each student.
-- **Instructor Schema:** Includes fields such as name, email, password, and course details for each instructor.
-- **Course Schema:** Includes fields such as course name, description, instructor details, and media content.
-
-### Database
-
-The database for the platform is built using MongoDB, a NoSQL database that provides a flexible and scalable data storage solution. MongoDB allows for the storage of unstructured and semi-structured data. The database stores the course content, user data, and other relevant information related to the platform.
-
-![Database Schema](images/schema.png)
-
-### Architecture Diagram
-
-Below is a high-level diagram that illustrates the architecture of the StudyNotion EdTech platform:
-
-![Architecture](images/architecture.png)
-
-## API Design
-
-The StudyNotion platform's API is designed following the REST architectural style. The API is implemented using Node.js and Express.js. It uses JSON for data exchange and follows standard HTTP request methods such as GET, POST, PUT, and DELETE.
-
-For detailed API documentation and endpoints, refer to the [API Documentation](/api-docs).
+app.listen(3000)
+```
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/username/repo.git`
-2. Navigate to the project directory: `cd StudyNotion`
-3. Install dependencies: `npm install`
+This is a [Node.js](https://nodejs.org/en/) module available through the
+[npm registry](https://www.npmjs.com/).
 
-## Configuration
+Before installing, [download and install Node.js](https://nodejs.org/en/download/).
+Node.js 0.10 or higher is required.
 
-1. Set up a MongoDB database and obtain the connection URL.
-2. Create a `.env` file in the root directory with the following environment variables:
-   ```
-   MONGODB_URI=<your-mongodb-connection-url>
-   JWT_SECRET=<your-jwt-secret-key>
-   ```
+If this is a brand new project, make sure to create a `package.json` first with
+the [`npm init` command](https://docs.npmjs.com/creating-a-package-json-file).
 
-## Usage
+Installation is done using the
+[`npm install` command](https://docs.npmjs.com/getting-started/installing-npm-packages-locally):
 
-1. Start the server: `npm start`
-2. Open a new terminal and navigate to the `client` directory: `cd client`
-3. Start the React development server: `npm start`
+```console
+$ npm install express
+```
 
-Access the application in your browser at `http://localhost:3000`.
+Follow [our installing guide](http://expressjs.com/en/starter/installing.html)
+for more information.
 
+## Features
 
+  * Robust routing
+  * Focus on high performance
+  * Super-high test coverage
+  * HTTP helpers (redirection, caching, etc)
+  * View system supporting 14+ template engines
+  * Content negotiation
+  * Executable for generating applications quickly
 
+## Docs & Community
+
+  * [Website and Documentation](http://expressjs.com/) - [[website repo](https://github.com/expressjs/expressjs.com)]
+  * [#express](https://web.libera.chat/#express) on [Libera Chat](https://libera.chat) IRC
+  * [GitHub Organization](https://github.com/expressjs) for Official Middleware & Modules
+  * Visit the [Wiki](https://github.com/expressjs/express/wiki)
+  * [Google Group](https://groups.google.com/group/express-js) for discussion
+  * [Gitter](https://gitter.im/expressjs/express) for support and discussion
+
+**PROTIP** Be sure to read [Migrating from 3.x to 4.x](https://github.com/expressjs/express/wiki/Migrating-from-3.x-to-4.x) as well as [New features in 4.x](https://github.com/expressjs/express/wiki/New-features-in-4.x).
+
+## Quick Start
+
+  The quickest way to get started with express is to utilize the executable [`express(1)`](https://github.com/expressjs/generator) to generate an application as shown below:
+
+  Install the executable. The executable's major version will match Express's:
+
+```console
+$ npm install -g express-generator@4
+```
+
+  Create the app:
+
+```console
+$ express /tmp/foo && cd /tmp/foo
+```
+
+  Install dependencies:
+
+```console
+$ npm install
+```
+
+  Start the server:
+
+```console
+$ npm start
+```
+
+  View the website at: http://localhost:3000
+
+## Philosophy
+
+  The Express philosophy is to provide small, robust tooling for HTTP servers, making
+  it a great solution for single page applications, websites, hybrids, or public
+  HTTP APIs.
+
+  Express does not force you to use any specific ORM or template engine. With support for over
+  14 template engines via [Consolidate.js](https://github.com/tj/consolidate.js),
+  you can quickly craft your perfect framework.
+
+## Examples
+
+  To view the examples, clone the Express repo and install the dependencies:
+
+```console
+$ git clone https://github.com/expressjs/express.git --depth 1
+$ cd express
+$ npm install
+```
+
+  Then run whichever example you want:
+
+```console
+$ node examples/content-negotiation
+```
+
+## Contributing
+
+  [![Linux Build][github-actions-ci-image]][github-actions-ci-url]
+  [![Windows Build][appveyor-image]][appveyor-url]
+  [![Test Coverage][coveralls-image]][coveralls-url]
+
+The Express.js project welcomes all constructive contributions. Contributions take many forms,
+from code for bug fixes and enhancements, to additions and fixes to documentation, additional
+tests, triaging incoming pull requests and issues, and more!
+
+See the [Contributing Guide](Contributing.md) for more technical details on contributing.
+
+### Security Issues
+
+If you discover a security vulnerability in Express, please see [Security Policies and Procedures](Security.md).
+
+### Running Tests
+
+To run the test suite, first install the dependencies, then run `npm test`:
+
+```console
+$ npm install
+$ npm test
+```
+
+## People
+
+The original author of Express is [TJ Holowaychuk](https://github.com/tj)
+
+The current lead maintainer is [Douglas Christopher Wilson](https://github.com/dougwilson)
+
+[List of all contributors](https://github.com/expressjs/express/graphs/contributors)
+
+## License
+
+  [MIT](LICENSE)
+
+[appveyor-image]: https://badgen.net/appveyor/ci/dougwilson/express/master?label=windows
+[appveyor-url]: https://ci.appveyor.com/project/dougwilson/express
+[coveralls-image]: https://badgen.net/coveralls/c/github/expressjs/express/master
+[coveralls-url]: https://coveralls.io/r/expressjs/express?branch=master
+[github-actions-ci-image]: https://badgen.net/github/checks/expressjs/express/master?label=linux
+[github-actions-ci-url]: https://github.com/expressjs/express/actions/workflows/ci.yml
+[npm-downloads-image]: https://badgen.net/npm/dm/express
+[npm-downloads-url]: https://npmcharts.com/compare/express?minimal=true
+[npm-install-size-image]: https://badgen.net/packagephobia/install/express
+[npm-install-size-url]: https://packagephobia.com/result?p=express
+[npm-url]: https://npmjs.org/package/express
+[npm-version-image]: https://badgen.net/npm/v/express
