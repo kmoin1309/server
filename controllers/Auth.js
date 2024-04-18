@@ -4,7 +4,6 @@ const otpGenerator = require("otp-generator");
 const Profile = require("../models/Profile");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const crypto = require("crypto");
 const mailSender = require("../utils/mailSender");
 const { passwordUpdated } = require("../mail/templates/passwordUpdate");
 require("dotenv").config();
@@ -121,7 +120,7 @@ exports.signup = async (req, res) => {
     console.log(recentOtp);
 
     // validate OTP
-    if (recentOtp.length == 0) {
+    if (recentOtp.length === 0) {
       //otp not found
       return res.status(400).json({
         success: false,
@@ -237,7 +236,7 @@ exports.changePassword = async (req, res) => {
     //get data from req body
     const userDetails = await User.findById(req.user.id);
     // get oldPassword, newPassword, confirmPassword
-    const { oldPassword, newPassword, confirmPassword } = req.body;
+    const { oldPassword, newPassword,} = req.body;
     //validation old passsword
     const isPasswordMatch = await bcrypt.compare(
       oldPassword,
@@ -277,7 +276,7 @@ exports.changePassword = async (req, res) => {
       // if there's an error sending the mail, log the error and return a 500 internal server error
       console.log("Error occured while sending the mail",error);
       return res.status(500).json({
-        message:false,
+        success:false,
         message:'Error occured while sending the mail',
         error:error.message,
       })
