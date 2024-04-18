@@ -1,5 +1,5 @@
 const Category = require("../models/Category");
-const { Mongoose } = require("mongoose");
+const { mongoose } = require("mongoose");
 
 // const Tag = require("../models/Category");
 
