@@ -9,7 +9,7 @@ exports.createSubsection = async (req, res) => {
     //fetch data from req bosy
     const { sectionId, title, timeDuration, description } = req.body;
     //extract file / video
-    const video = req.files.videoFile;
+    const video = req.files.video
     // validation
     if (!sectionId || !timeDuration || !title || !description || !video) {
       return res.status(400).json({
@@ -22,8 +22,9 @@ exports.createSubsection = async (req, res) => {
       video,
       process.env.FOLDER_NAME
     );
+    console.log(uploadDetails)
     //create a sub section
-    const SubSection = await SubSection.create({
+    const SubSectionDetails = await SubSection.create({
       title: title,
       timeDuration: `${uploadDetails.duration}`,
       description: description,
